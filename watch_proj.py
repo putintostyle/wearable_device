@@ -109,8 +109,8 @@ def find_conti(x, time):
 # In[8]:
 
 
-def data_extraction(path):
-    data = pd.read_csv(path)
+def data_extraction(raw_data):
+    data = pd.DataFrame(raw_data)
 
     data.columns = ["ID", "date", "time", 'hr', 'temp', 'activity']
 
@@ -193,4 +193,4 @@ def main(path, cri_temperature, cri_increasing_time, window_size=None):
 # In[20]:
 
 
-main(os.path.join('src/', token_list[1], token_list[1]+'.csv'), 36, 15)
+main(['2019-11-10,00:00:00,123,2506,1'], 36, 15)
