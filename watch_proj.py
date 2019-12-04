@@ -41,21 +41,8 @@ for i in token_list:
         wget.download("http://54.163.150.6:8002/shmain/model/data?token="+str(i), os.path.join('src/', i))
 
 
-# In[22]:
-
-
-r = requests.get("http://54.163.150.6:8002/shmain/model/data?token="+str(i))
-
-
-# In[23]:
-
-
-r.headers
-
 
 # # Data Processing
-
-# In[5]:
 
 
 def clean_disconti(array, time): 
@@ -85,12 +72,13 @@ def clean_disconti(array, time):
 def mv_avg(x, window_size):
     output_arr = []
     for data_idx in range(0, len(x)):
-        if (data_idx+window_size)>=len(x)-1:
-            output_arr.append(np.mean(x[data_idx:]))
+        if data_idx < window_size-1:
+            output_arr.append(np.mean(x[:data_idx+1]))
+        elif data_idx == len(x):
+            break
         else:
-            output_arr.append(np.mean(x[data_idx:data_idx+window_size]))
-    return np.array(output_arr)
-            
+            output_arr.append(np.mean(x[data_idx+1-window_size:data_idx+1]))
+    return np.array(output_arr)        
 
 
 # function mv_avg ( temperature, window_size)
@@ -206,16 +194,3 @@ def main(path, cri_temperature, cri_increasing_time, window_size=None):
 
 
 main(os.path.join('src/', token_list[1], token_list[1]+'.csv'), 26, 1)
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
