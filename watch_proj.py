@@ -1,3 +1,6 @@
+"""
+Patient prediction model
+"""
 import datetime
 import pandas as pd
 import numpy as np
@@ -5,7 +8,7 @@ import numpy as np
 # Data Processing
 
 
-def clean_disconti(array, time): 
+def clean_disconti(array, time):
     clean_arr = np.empty((len(array)))
     for i in range(len(array)):
         if (i>2) & (i<len(array)-2):
@@ -19,11 +22,8 @@ def clean_disconti(array, time):
 
 
 # function clean_disconti( tempeaature, time)
-# 
 # temperature : ndarray
-# 
 # time : ndarray
-# 
 # output : 修掉不正常的點
 
 
@@ -40,14 +40,9 @@ def mv_avg(x, window_size):
 
 
 # function mv_avg ( temperature, window_size)
-# 
 # temperature : ndarray
-# 
 # window_size :　int
-# 
 # output : 移動平均，光滑的訊號
-# 
-
 
 
 def find_conti(x, time):
@@ -58,9 +53,7 @@ def find_conti(x, time):
 
 
 # function find_conti(temperature)
-# 
 # temperature : ndarray
-#     
 # return 開始上升的時間點(距離現在前幾秒) , 在這個區間裡面上升幾度
 
 
@@ -81,18 +74,14 @@ def data_extraction(raw_data):
     modify_temp_watch = clean_disconti(np.copy(data_temp), np.copy(data_time))
 
     removable_disconti = [i for i, x in enumerate(((modify_temp_watch-data_temp)!=0).astype(int)) if x != 0]
-    
+
     return data_time, modify_temp_watch, removable_disconti
 
 
 # function data_extraction(path)
-# 
-# return 
-# 
+# returns
 # data_time : ndarray (時間tag, 陣列)
-# 
 # modify_temp_watch : ndarray (體溫)
-# 
 # removable_disconti : ndarray (有問題點的index)
 
 
@@ -111,8 +100,6 @@ def data_extraction(raw_data):
 # plt.show()
 
 
-
-
 def main(path, cri_temperature, cri_increasing_time, window_size=None):
     data_time, data_temperature, index_of_remove = data_extraction(path)
     if window_size == None:
@@ -126,18 +113,11 @@ def main(path, cri_temperature, cri_increasing_time, window_size=None):
     else:
         return 0
 
-
 # function main(data_path, cri_temperature, cri_increasing_time, window_size)
-# 
 # data_path : format = csv
-# 
 # cri_temperature : 高於多少溫度
-# 
 # cri_increasing_time : 升高多少時間(seconds)
-# 
 # window_size : optional default = 4 移動平均採樣點數
-# 
-# return : int 
-# 
+# return : int
 # 1:警示
 # 0:沒事
