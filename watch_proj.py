@@ -4,9 +4,9 @@
 # In[1]:
 
 
-import requests
+# import requests
 # import selenium 
-import wget
+# import wget
 import os
 import sys
 import pandas as pd
@@ -20,25 +20,25 @@ import matplotlib.pyplot as plt
 # In[2]:
 
 
-token_respon = requests.get("http://54.163.150.6:8002/shmain/model/token")
-token_list = token_respon.json()
+# token_respon = requests.get("http://54.163.150.6:8002/shmain/model/token")
+# token_list = token_respon.json()
 
 
 # In[3]:
 
 
-token_list
+# token_list
 
 
 # In[4]:
 
 
-for i in token_list:
-    if os.path.isdir(os.path.join('src/', i)) == False:
-        os.mkdir(os.path.join('src/', i))
-        wget.download("http://54.163.150.6:8002/shmain/model/data?token="+str(i), os.path.join('src/', i))
-    else:
-        wget.download("http://54.163.150.6:8002/shmain/model/data?token="+str(i), os.path.join('src/', i))
+# for i in token_list:
+#     if os.path.isdir(os.path.join('src/', i)) == False:
+#         os.mkdir(os.path.join('src/', i))
+#         wget.download("http://54.163.150.6:8002/shmain/model/data?token="+str(i), os.path.join('src/', i))
+#     else:
+#         wget.download("http://54.163.150.6:8002/shmain/model/data?token="+str(i), os.path.join('src/', i))
 
 
 
