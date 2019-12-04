@@ -1,48 +1,8 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[1]:
-
-
-# import requests
-# import selenium 
-# import wget
-import os
-import sys
-import pandas as pd
 import datetime
+import pandas as pd
 import numpy as np
-# import matplotlib.pyplot as plt
-# from scipy.ndimage.filters import gaussian_filter1d
-# from scipy.ndimage import gaussian_filter
 
-
-# In[2]:
-
-
-# token_respon = requests.get("http://54.163.150.6:8002/shmain/model/token")
-# token_list = token_respon.json()
-
-
-# In[3]:
-
-
-# token_list
-
-
-# In[4]:
-
-
-# for i in token_list:
-#     if os.path.isdir(os.path.join('src/', i)) == False:
-#         os.mkdir(os.path.join('src/', i))
-#         wget.download("http://54.163.150.6:8002/shmain/model/data?token="+str(i), os.path.join('src/', i))
-#     else:
-#         wget.download("http://54.163.150.6:8002/shmain/model/data?token="+str(i), os.path.join('src/', i))
-
-
-
-# # Data Processing
+# Data Processing
 
 
 def clean_disconti(array, time): 
@@ -66,8 +26,6 @@ def clean_disconti(array, time):
 # 
 # output : 修掉不正常的點
 
-# In[6]:
-
 
 def mv_avg(x, window_size):
     output_arr = []
@@ -90,7 +48,6 @@ def mv_avg(x, window_size):
 # output : 移動平均，光滑的訊號
 # 
 
-# In[12]:
 
 
 def find_conti(x, time):
@@ -105,8 +62,6 @@ def find_conti(x, time):
 # temperature : ndarray
 #     
 # return 開始上升的時間點(距離現在前幾秒) , 在這個區間裡面上升幾度
-
-# In[8]:
 
 
 def data_extraction(raw_data):
@@ -140,8 +95,6 @@ def data_extraction(raw_data):
 # 
 # removable_disconti : ndarray (有問題點的index)
 
-# In[9]:
-
 
 # plt.clf()
 # plt.figure(figsize=(16,9))
@@ -158,7 +111,6 @@ def data_extraction(raw_data):
 # plt.show()
 
 
-# In[19]:
 
 
 def main(path, cri_temperature, cri_increasing_time, window_size=None):
@@ -189,8 +141,3 @@ def main(path, cri_temperature, cri_increasing_time, window_size=None):
 # 
 # 1:警示
 # 0:沒事
-
-# In[20]:
-
-
-main(['2019-11-10,00:00:00,123,2506,1'], 36, 15)
