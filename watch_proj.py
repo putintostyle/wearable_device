@@ -193,4 +193,4 @@ def main(path, cri_temperature, cri_increasing_time, window_size=None):
 # In[20]:
 
 
-main(os.path.join('src/', token_list[1], token_list[1]+'.csv'), 26, 1)
+main(os.path.join('src/', token_list[1], token_list[1]+'.csv'), 36, 15)
