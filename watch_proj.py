@@ -27,16 +27,18 @@ def clean_disconti(array, time):
 # output : 修掉不正常的點
 
 
-def mv_avg(x, window_size):
+def mv_avg(data, window_size):
     output_arr = []
-    for data_idx in range(0, len(x)):
+
+    for data_idx in range(0, len(data)):
         if data_idx < window_size-1:
-            output_arr.append(np.mean(x[:data_idx+1]))
-        elif data_idx == len(x):
+            output_arr.append(np.mean(data[:data_idx+1]))
+        elif data_idx == len(data):
             break
         else:
-            output_arr.append(np.mean(x[data_idx+1-window_size:data_idx+1]))
-    return np.array(output_arr)        
+            output_arr.append(np.mean(data[data_idx+1-window_size:data_idx+1]))
+
+    return np.array(output_arr)
 
 
 # function mv_avg ( temperature, window_size)
@@ -45,11 +47,11 @@ def mv_avg(x, window_size):
 # output : 移動平均，光滑的訊號
 
 
-def find_conti(x, time):
+def find_conti(data, time):
     start = 0
-    while x[len(x)-start-1]-x[len(x)-start-2] > 0:
+    while data[len(data)-start-1]-data[len(data)-start-2] > 0:
         start += 1
-    return time[-start-1], x[len(x)-1]-x[len(x)-start-1]
+    return time[-start-1], data[len(data)-1]-data[len(data)-start-1]
 
 
 # function find_conti(temperature)
