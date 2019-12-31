@@ -85,33 +85,19 @@ def data_extraction(raw_data):
 # removable_disconti : ndarray (有問題點的index)
 
 
-# plt.clf()
-# plt.figure(figsize=(16,9))
-# plt.plot(data_time[:-increasing_ti], smooth_data[:-increasing_ti] ,'grey')
-# plt.plot(data_time[-increasing_ti-1:], smooth_data[-increasing_ti-1:], 'r')
-# plt.xlabel('time')
-# plt.ylabel('temperature')
-# plt.legend(['regular temperature', 'increasing temperature'])
-# plt.title("Your temperature is higher then usual and has been increased for "+str(increasing_ti)+" minutes")
-# # plt.xticks([datetime.datetime.strftime(data_time[0]+i*datetime.timedelta(seconds = 30), "%H:%M:%S") for i in range(0,5)], rotation = 20)
-# plt.xticks(rotation = 60)
-
-# plt.savefig('tmp.png')
-# plt.show()
-
-
 def main(path, cri_temperature, cri_increasing_time, window_size=None):
-    data_time, data_temperature, index_of_remove = data_extraction(path)
-    if window_size == None:
+    data_time, data_temperature, _ = data_extraction(path)
+
+    if window_size is None:
         smooth_data = mv_avg(data_temperature, 4)
     else:
         smooth_data = mv_avg(data_temperature, window_size)
-    increasing_ti, increasing_temp = find_conti(smooth_data[:-2], data_time)
+
+    increasing_ti, _ = find_conti(smooth_data[:-2], data_time)
+
     if (smooth_data[-1] > cri_temperature) & (data_time[-1] - increasing_ti > datetime.timedelta(seconds = cri_increasing_time)) :
-#         print(data_time[-1] - increasing_ti)
         return 1
-    else:
-        return 0
+    return 0
 
 # function main(data_path, cri_temperature, cri_increasing_time, window_size)
 # data_path : format = csv
