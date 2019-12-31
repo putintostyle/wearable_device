@@ -11,7 +11,7 @@ import numpy as np
 def clean_disconti(array, time):
     clean_arr = np.empty((len(array)))
     for i in range(len(array)):
-        if (i>2) & (i<len(array)-2):
+        if (i > 2) & (i < len(array)-2):
             if min(abs(array[i]-array[i+1])/(time[i+1]-time[i]).total_seconds(), abs(array[i]-array[i-1])/(time[i]-time[i-1]).total_seconds()) > 0.3:
                 clean_arr[i] = (array[i-1]+array[i+1])/2
             else:
@@ -63,10 +63,8 @@ def data_extraction(raw_data):
     data = pd.DataFrame(raw_data)
 
     data.columns = ["ID", "date", "time", 'hr', 'temp', 'activity']
-
     data['time'] = data['date']+' '+data['time']
-
-    data = data.drop(['date'], axis = 1)
+    data = data.drop(['date'], axis=1)
 
 
     data_time = np.array([datetime.datetime.strptime(i, '%Y-%m-%d %H:%M:%S') for i in data['time'].values])
@@ -75,7 +73,7 @@ def data_extraction(raw_data):
 
     modify_temp_watch = clean_disconti(np.copy(data_temp), np.copy(data_time))
 
-    removable_disconti = [i for i, x in enumerate(((modify_temp_watch-data_temp)!=0).astype(int)) if x != 0]
+    removable_disconti = [i for i, x in enumerate(((modify_temp_watch-data_temp) != 0).astype(int)) if x != 0]
 
     return data_time, modify_temp_watch, removable_disconti
 
@@ -97,7 +95,7 @@ def main(path, cri_temperature, cri_increasing_time, window_size=None):
 
     increasing_ti, _ = find_conti(smooth_data[:-2], data_time)
 
-    if (smooth_data[-1] > cri_temperature) & (data_time[-1] - increasing_ti > datetime.timedelta(seconds = cri_increasing_time)) :
+    if (smooth_data[-1] > cri_temperature) & (data_time[-1] - increasing_ti > datetime.timedelta(seconds=cri_increasing_time)):
         return 1
     return 0
 
