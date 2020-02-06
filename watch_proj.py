@@ -98,8 +98,8 @@ def main(path, cri_temperature, cri_increasing_time, window_size=None):
     rule_1 = (smooth_data[-1] > cri_temperature)& (data_time[-1] - increasing_ti > datetime.timedelta(seconds=cri_increasing_time))
     rule_2 = np.sum(data[(time[-1]-time) <= datetime.timedelta(seconds=60*60)] >= cri_temperature_upper) > 0.7*np.sum(data[(time[-1]-time) <= datetime.timedelta(seconds=60*60)])
     
-    if (rule_1 == True)|(rule_2 == True):
-        return 1
+    time_rule = (time[-1].time() >= datetime.time(hour = 9))&(time[-1].time() <= datetime.time(hour = 18))
+    if (time_rule == True)& ((rule_1 == True)|(rule_2 == True)):
     return 0
 
 # function main(data_path, cri_temperature, cri_increasing_time, window_size)
@@ -109,7 +109,7 @@ def main(path, cri_temperature, cri_increasing_time, window_size=None):
     # cri_increasing_time : 升高多少時間(seconds)
 # rule_2 : 在前一個小時內的資料裡，有70%的時候，體溫是大於cri_temperature_upper
     # cri_temperature_upper
-
+#time_rule : 定義時間範圍
 # window_size : optional default = 4 移動平均採樣點數
 # return : int
 # 1:警示
